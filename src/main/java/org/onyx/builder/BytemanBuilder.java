@@ -20,11 +20,23 @@
 package org.onyx.builder;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import japa.parser.JavaParser;
+import japa.parser.ParseException;
+import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.body.ClassOrInterfaceDeclaration;
+import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 public class BytemanBuilder {
 
     private final File searchDirectory;
     private final File outputDirectory;
+
+    private final ArrayList<File> fileList  = new ArrayList<File>();
 
     public BytemanBuilder(String searchDirectory, String outputDirectory) {
         this(new File(searchDirectory), new File(outputDirectory));
@@ -35,7 +47,7 @@ public class BytemanBuilder {
         this.outputDirectory = outputDirectory;
     }
 
-    public void build() throws DirectoryException {
+    public void build() throws DirectoryException, IOException {
         checkDirectory(searchDirectory);
         checkDirectory(outputDirectory);
 
@@ -51,6 +63,65 @@ public class BytemanBuilder {
         }
     }
 
-    private void buildRules() {
+    private void buildRules() throws IOException {
+        long startTime = System.nanoTime();
+        searchDir(searchDirectory);
+
+        parseFiles();
+
+        System.out.println("ELAPSED: " + (System.nanoTime() - startTime) / 1E9);
     }
+
+    private void parseFiles() throws IOException {
+        for (File f : fileList) {
+            parseJavaFile(f);
+        }
+    }
+
+    private void searchDir(File dir) {
+        File[] list = dir.listFiles();
+
+        for (File f : list) {
+            if (f.isDirectory()) {
+                searchDir(f);
+            } else if (isJavaFile(f)) {
+                fileList.add(f);
+            }
+        }
+    }
+
+    private boolean isJavaFile(File f) {
+        if (f.getName().endsWith(".java")) {
+            return true;
+        }
+        return false;
+    }
+
+    private void parseJavaFile(File file) throws IOException {
+        FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+        try {
+            CompilationUnit cu = JavaParser.parse(fis);
+
+            new FileVisitor().visit(cu, null);
+        } catch (ParseException e) {
+            System.out.println("ERROR: " + file.getAbsolutePath());
+        } finally {
+            fis.close();
+        }
+
+    }
+
+    private static class FileVisitor extends VoidVisitorAdapter {
+        @Override
+        public void visit(ClassOrInterfaceDeclaration n, Object arg) {
+            System.out.println("Class: " + n.getName());
+            super.visit(n, arg);
+        }
+        @Override
+        public void visit(MethodDeclaration n, Object arg) {
+            System.out.println("Method: " + n.getName());
+            super.visit(n, arg);
+        }
+    }
+
 }
