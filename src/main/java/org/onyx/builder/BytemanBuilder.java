@@ -23,22 +23,23 @@ import java.io.File;
 
 public class BytemanBuilder {
 
-    private final String searchDirectory;
-    private final String outputDirectory;
+    private final File searchDirectory;
+    private final File outputDirectory;
 
     public BytemanBuilder(String searchDirectory, String outputDirectory) {
+        this(new File(searchDirectory), new File(outputDirectory));
+    }
+
+    public BytemanBuilder(File searchDirectory, File outputDirectory) {
         this.searchDirectory = searchDirectory;
         this.outputDirectory = outputDirectory;
     }
 
     public void build() throws DirectoryException {
-        File base = new File(searchDirectory);
-        checkDirectory(base);
+        checkDirectory(searchDirectory);
+        checkDirectory(outputDirectory);
 
-        File output = new File(outputDirectory);
-        checkDirectory(output);
-
-        build(base, output);
+        buildRules();
     }
 
     private void checkDirectory(File f) throws DirectoryException {
@@ -50,7 +51,6 @@ public class BytemanBuilder {
         }
     }
 
-    private void build(File base, File output) {
-
+    private void buildRules() {
     }
 }

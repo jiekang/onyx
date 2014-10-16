@@ -29,7 +29,7 @@ public class BytemanBuilderTest {
 
     @Test(expected = DirectoryException.class)
     public void testDirectoryDoesNotExist() throws IOException, DirectoryException {
-        String file = "doesNotExist.file";
+        File file = new File("doesNotExist");
 
         BytemanBuilder builder = new BytemanBuilder(file, file);
         builder.build();
@@ -40,7 +40,7 @@ public class BytemanBuilderTest {
         File file = Files.createTempFile("temp", ".file").toFile();
         file.deleteOnExit();
 
-        BytemanBuilder builder = new BytemanBuilder(file.getAbsolutePath(), file.getAbsolutePath());
+        BytemanBuilder builder = new BytemanBuilder(file, file);
         builder.build();
     }
 }
