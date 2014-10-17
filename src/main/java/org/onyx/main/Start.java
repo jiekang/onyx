@@ -20,6 +20,7 @@
 package org.onyx.main;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.onyx.builder.BytemanBuilder;
 import org.onyx.builder.DirectoryException;
@@ -34,7 +35,7 @@ public class Start {
         }
     }
 
-    public static void start(String[] args) throws DirectoryException, IOException {
+    public static void start(String[] args) throws DirectoryException, IOException, URISyntaxException {
         if (args.length == 2) {
             String searchDirectory = args[0];
             String outputDirectory = args[1];
