@@ -35,7 +35,6 @@ import org.onyx.info.ClassInfo;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
-import japa.parser.ast.PackageDeclaration;
 import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
@@ -170,8 +169,8 @@ public class BytemanBuilder {
         try {
             CompilationUnit cu = JavaParser.parse(fis);
 
-            new FileVisitor().visit(cu, null);
-        } catch (ParseException e) {
+            new FileVisitor(cu.getPackage().getName().toString()).visit(cu, null);
+        } catch (NullPointerException | ParseException e) {
             System.out.println("ERROR: " + file.getAbsolutePath());
         } finally {
             fis.close();
@@ -180,23 +179,16 @@ public class BytemanBuilder {
     }
 
     private class FileVisitor extends VoidVisitorAdapter {
+        private final String packageName;
         private ClassInfo currentClass;
 
-        @Override
-        public void visit(PackageDeclaration n, Object arg) {
-            if (currentClass == null) {
-                currentClass = new ClassInfo();
-            }
-            currentClass.setPackageName(n.getName().toString());
-            super.visit(n, arg);
+        public FileVisitor(String packageName) {
+            this.packageName = packageName;
         }
 
         @Override
         public void visit(ClassOrInterfaceDeclaration n, Object arg) {
-            if (currentClass == null) {
-                currentClass = new ClassInfo();
-            }
-            currentClass.setClassName(n.getName());
+            currentClass = new ClassInfo(packageName, n.getName());
             classList.add(currentClass);
             super.visit(n, arg);
         }

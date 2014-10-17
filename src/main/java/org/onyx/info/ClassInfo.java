@@ -4,15 +4,12 @@ import java.util.ArrayList;
 
 public class ClassInfo {
     private final ArrayList<String> methodList = new ArrayList<>();
-    private String className;
-    private String packageName = "";
+    private final String className;
+    private final String packageName;
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public void setPackageName(String packageName) {
+    public ClassInfo(String packageName, String className) {
         this.packageName = packageName;
+        this.className = className;
     }
 
     public void addMethod(String methodName) {
