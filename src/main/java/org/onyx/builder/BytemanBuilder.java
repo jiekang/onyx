@@ -99,7 +99,7 @@ public class BytemanBuilder {
         System.out.println("ELAPSED: " + (System.nanoTime() - startTime) / 1E9);
     }
 
-    private void createRules() {
+    private void createRules() throws IOException {
         for (ClassInfo classInfo : classList) {
             String entryRules = createEntryRules(classInfo);
             String exitRules = createExitRules(classInfo);
@@ -109,23 +109,25 @@ public class BytemanBuilder {
     }
 
     private String createExitRules(ClassInfo classInfo) {
-        return createRules(classInfo, exitTemplate,"EXIT:");
+        return createRules(classInfo, exitTemplate,"EXIT");
     }
 
     private String createEntryRules(ClassInfo classInfo) {
-        return createRules(classInfo, entryTemplate, "ENTRY:");
+        return createRules(classInfo, entryTemplate, "ENTRY");
     }
 
     private String createRules(ClassInfo classInfo, String template, String message) {
+        int id = 0;
         String rule = "";
         String className = classInfo.getClassName();
         for (String method : classInfo.getMethodList()) {
             String methodRule = template;
-            methodRule = methodRule.replaceAll("@RULE_MESSAGE", "Rule : " + className);
+            methodRule = methodRule.replaceAll("@RULE_NAME", "Rule : " + className + " : " + message + " : " + id);
             methodRule = methodRule.replaceAll("@CLASS_NAME", className);
             methodRule = methodRule.replaceAll("@METHOD_NAME", method);
-            methodRule = methodRule.replaceAll("@MESSAGE", "BM:" + message + className + "." + method);
+            methodRule = methodRule.replaceAll("@MESSAGE", "\"BM:" + message + ":" + className + "." + method + "\\\\n\"");
             rule = rule + methodRule + "\n\n";
+            id++;
         }
         return rule;
     }
@@ -197,7 +199,6 @@ public class BytemanBuilder {
             if (currentClass != null) {
                 currentClass.addMethod(n.getName());
             }
-            super.visit(n, arg);
         }
     }
 
