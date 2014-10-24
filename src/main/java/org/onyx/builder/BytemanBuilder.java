@@ -121,14 +121,18 @@ public class BytemanBuilder {
         String rule = "";
         String className = classInfo.getClassName();
         for (String method : classInfo.getMethodList()) {
-            String methodRule = template;
-            methodRule = methodRule.replaceAll("@RULE_NAME", "Rule : " + className + " : " + message + " : " + id);
-            methodRule = methodRule.replaceAll("@CLASS_NAME", className);
-            methodRule = methodRule.replaceAll("@METHOD_NAME", method);
-            methodRule = methodRule.replaceAll("@MESSAGE", "\"BM:" + message + ":" + className + "." + method + "\\\\n\"");
-            rule = rule + methodRule + "\n\n";
+            rule = rule + replaceRule(template, className, message, id, method) + "\n\n";
             id++;
         }
+        return rule;
+    }
+
+    private String replaceRule(String rule, String className, String message, int id, String method) {
+        rule = rule.replaceAll("@RULE_NAME", "Rule : " + className + " : " + message + " : " + id);
+        rule = rule.replaceAll("@CLASS_NAME", className);
+        rule = rule.replaceAll("@METHOD_NAME", method);
+        rule = rule.replaceAll("@MESSAGE", "\"BM:" + message + ":" + className + "." + method + "\\\\n\"");
+
         return rule;
     }
 
