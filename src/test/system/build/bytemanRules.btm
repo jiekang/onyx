@@ -1,0 +1,122 @@
+RULE Rule : org.onyx.system.base.program.BaseClass : ENTRY : 0
+CLASS org.onyx.system.base.program.BaseClass
+METHOD begin
+AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:ENTRY:" + threadName + ":org.onyx.system.base.program.BaseClass.begin\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : ENTRY : 1
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodOne
+AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:ENTRY:" + threadName + ":org.onyx.system.base.program.BaseClass.methodOne\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : ENTRY : 2
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodTwo
+AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:ENTRY:" + threadName + ":org.onyx.system.base.program.BaseClass.methodTwo\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : ENTRY : 3
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodThree
+AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:ENTRY:" + threadName + ":org.onyx.system.base.program.BaseClass.methodThree\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : ENTRY : 4
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodFour
+AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:ENTRY:" + threadName + ":org.onyx.system.base.program.BaseClass.methodFour\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : ENTRY : 5
+CLASS org.onyx.system.base.program.BaseClass
+METHOD stop
+AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:ENTRY:" + threadName + ":org.onyx.system.base.program.BaseClass.stop\n")
+ENDRULE
+
+
+RULE Rule : org.onyx.system.base.program.BaseClass : EXIT : 0
+CLASS org.onyx.system.base.program.BaseClass
+METHOD begin
+AT EXIT
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:EXIT:" + threadName + ":org.onyx.system.base.program.BaseClass.begin\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : EXIT : 1
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodOne
+AT EXIT
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:EXIT:" + threadName + ":org.onyx.system.base.program.BaseClass.methodOne\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : EXIT : 2
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodTwo
+AT EXIT
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:EXIT:" + threadName + ":org.onyx.system.base.program.BaseClass.methodTwo\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : EXIT : 3
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodThree
+AT EXIT
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:EXIT:" + threadName + ":org.onyx.system.base.program.BaseClass.methodThree\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : EXIT : 4
+CLASS org.onyx.system.base.program.BaseClass
+METHOD methodFour
+AT EXIT
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:EXIT:" + threadName + ":org.onyx.system.base.program.BaseClass.methodFour\n")
+ENDRULE
+
+RULE Rule : org.onyx.system.base.program.BaseClass : EXIT : 5
+CLASS org.onyx.system.base.program.BaseClass
+METHOD stop
+AT EXIT
+BIND
+threadName = Thread.currentThread().getName();
+IF true
+DO traceln("err", "BM:EXIT:" + threadName + ":org.onyx.system.base.program.BaseClass.stop\n")
+ENDRULE
+
+
