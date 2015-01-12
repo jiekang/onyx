@@ -25,10 +25,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.onyx.info.ClassInfo;
 
@@ -68,11 +72,17 @@ public class BytemanBuilder {
     }
 
     private void loadTemplates() throws URISyntaxException, IOException {
+        final Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+
         URL entryURL = this.getClass().getResource("/org/onyx/template/BytemanEntryRule.template");
+        FileSystem entryFS = FileSystems.newFileSystem(entryURL.toURI(), env);
+
         Path entryPath = Paths.get(entryURL.toURI());
         entryTemplate = new String(Files.readAllBytes(entryPath));
 
         URL exitURL = this.getClass().getResource("/org/onyx/template/BytemanExitRule.template");
+
         Path exitPath = Paths.get(exitURL.toURI());
         exitTemplate = new String(Files.readAllBytes(exitPath));
     }
@@ -125,7 +135,7 @@ public class BytemanBuilder {
             methodRule = methodRule.replaceAll("@RULE_NAME", "Rule : " + className + " : " + message + " : " + id);
             methodRule = methodRule.replaceAll("@CLASS_NAME", className);
             methodRule = methodRule.replaceAll("@METHOD_NAME", method);
-            methodRule = methodRule.replaceAll("@MESSAGE", "\"BM:" + message + ":" + className + "." + method + "\\\\n\"");
+            methodRule = methodRule.replaceAll("@MESSAGE", "\"BM:" + message + ":" + "\"" + " + " +  "threadName" + " + " + "\"" + ":" + className + "." + method + "\\\\n\"");
             rule = rule + methodRule + "\n\n";
             id++;
         }

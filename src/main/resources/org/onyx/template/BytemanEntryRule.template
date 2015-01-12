@@ -2,6 +2,8 @@ RULE @RULE_NAME
 CLASS @CLASS_NAME
 METHOD @METHOD_NAME
 AT ENTRY
+BIND
+threadName = Thread.currentThread().getName();
 IF true
 DO traceln("err", @MESSAGE)
 ENDRULE
