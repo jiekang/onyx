@@ -76,7 +76,7 @@ public class BytemanBuilder {
         env.put("create", "true");
 
         URL entryURL = this.getClass().getResource("/org/onyx/template/BytemanEntryRule.template");
-//        FileSystem entryFS = FileSystems.newFileSystem(entryURL.toURI(), env);
+        FileSystem entryFS = FileSystems.newFileSystem(entryURL.toURI(), env);
 
         Path entryPath = Paths.get(entryURL.toURI());
         entryTemplate = new String(Files.readAllBytes(entryPath));
