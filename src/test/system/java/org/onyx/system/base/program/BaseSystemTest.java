@@ -38,14 +38,11 @@ public class BaseSystemTest {
         });
         t.start();
 
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             while(br.readLine()==null){
             }
 
             base.stop();
-
         } catch(IOException e) {
             e.printStackTrace();
         }
