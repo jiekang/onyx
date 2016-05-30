@@ -15,6 +15,7 @@ package:
 build: package
 	cp ./target/$(JAR) $(BUILD_DIR)
 
-install: build  
+install: build 
+	mkdir -p bin
 	echo java -jar $(BUILD_DIR)/$(JAR) "$$"* > $(BIN_FILE) ; \
 	chmod +x $(BIN_FILE) 
