@@ -13,6 +13,7 @@ package:
 	mvn clean package
 
 build: package
+	mkdir -p build
 	cp ./target/$(JAR) $(BUILD_DIR)
 
 install: build 
