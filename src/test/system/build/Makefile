@@ -5,6 +5,6 @@ install:
 	find ../java/ -name *.java | xargs javac -d ./classes
 	jar cfm ./BaseTest.jar manifest.mf -C classes/ .
 	../../../../bin/onyx ../java ./
-	echo bmjava -l bytemanRules.btm -jar BaseTest.jar > run-test
+	echo -e '#!/bin/bash\nFILE=~/blob\nbmjava -l bytemanRules.btm -jar BaseTest.jar 2>&1 | tee $$FILE' > run-test
 	chmod +x run-test
 	

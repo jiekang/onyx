@@ -1,5 +1,3 @@
-#! /bin/bash
-
+#!/bin/bash
 FILE=~/blob
-
 bmjava -l bytemanRules.btm -jar BaseTest.jar 2>&1 | tee $FILE
